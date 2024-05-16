@@ -1,12 +1,16 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/mail-send', methods=['POST'])
 def handle_post_request():
+    print("Request received from:", request.remote_addr)
+
     # 요청의 JSON 본문에서 auth code와 emailAddress 추출
     data = request.get_json()
     auth_code = data.get('authCode')
